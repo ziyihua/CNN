@@ -21,9 +21,11 @@ public class CNNff extends Structure{
                 if (convnet.layers.get(i).a.isEmpty()) {
                     convnet.layers.get(i).a.add(0, Ac);
                 }else convnet.layers.get(i).a.set(0,Ac);
+
                 LAYER layer_previous = convnet.layers.get(i-1);
                 LAYER layer_current = convnet.layers.get(i);
-                for (int j = 0; j < convnet.layers.get(i).outmaps; j++) {
+
+                for (int j = 0; j < layer_current.outmaps; j++) {
                     //temporary output
                     int a = ((double[][][]) (layer_previous.a.get(0).a_list).get(0)).length;
                     int b = ((double[][][]) (layer_previous.a.get(0).a_list).get(0))[0].length;
@@ -39,6 +41,7 @@ public class CNNff extends Structure{
                             }
                         }
                     }
+
                     //convolution
                     for (int k = 0; k < inputmaps; k++) {
                         for (int l = 0; l < c_new; l++) {

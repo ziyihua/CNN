@@ -11,6 +11,76 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
 
+        /*double[][] input = new double[2][2];
+        input[0][0] = 1;
+        input[0][1] = 1;
+        input[1][0] = 2;
+        input[1][1] = 0;
+        input[0][0][1] = 2;
+        input[0][1][1] = 0;
+        input[1][0][1] = -1;
+        input[1][1][1] = 1;
+        input[0][0][2] = 1;
+        input[0][1][2] = 2;
+        input[1][0][2] = -1;
+        input[1][1][2] = 2;
+
+        double[][][] kernel = new double[3][3][3];
+        kernel[0][0][0]=1;
+        kernel[0][1][0]=2;
+        kernel[0][2][0]=3;
+        kernel[1][0][0]=0;
+        kernel[1][1][0]=1;
+        kernel[1][2][0]=1;
+        kernel[2][0][0]=-1;
+        kernel[2][1][0]=3;
+        kernel[2][2][0]=1;
+
+        kernel[0][0][1]=3;
+        kernel[0][1][1]=4;
+        kernel[0][2][1]=-2;
+        kernel[1][0][1]=0;
+        kernel[1][1][1]=2;
+        kernel[1][2][1]=2;
+        kernel[2][0][1]=3;
+        kernel[2][1][1]=1;
+        kernel[2][2][1]=0;
+
+        kernel[0][0][2]=0;
+        kernel[0][1][2]=1;
+        kernel[0][2][2]=0;
+        kernel[1][0][2]=-1;
+        kernel[1][1][2]=0;
+        kernel[1][2][2]=3;
+        kernel[2][0][2]=-2;
+        kernel[2][1][2]=2;
+        kernel[2][2][2]=0;
+
+        double[][] output;
+        for (int i = 0; i < 3; i++) {
+            double[][] input_one = new double[3][3];
+            for (int j = 0; j < 3; j++) {
+                for (int k = 0; k < 3; k++) {
+                    input_one[j][k] = kernel[j][k][i];
+                }
+            }
+            output = Convolution.convolution2D(input_one,3,3,input,2,2);
+            for (int k = 0; k < 2; k++) {
+                for (int l = 0; l < 2; l++) {
+                        System.out.println(output[k][l]);
+                }
+            }
+        }*/
+
+
+        /*double[][] output;
+        output = Convolution.convolution3D(kernel,3,3,3,input,2,2,3);
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 2; j++) {
+                System.out.println(output[i][j]);
+            }
+        }*/
+
         //Layers of CNN
         //row 0 is type
         String[][] architecture = new String[4][5];
@@ -75,19 +145,27 @@ public class Main {
 
         double alpha = 1;
         int batchsize = 50;
-        int numepochs = 1;
+        int numepochs = 10;
 
         convnet = CNNtrain.CNNTrain(architecture, convnet, alpha, numepochs, batchsize, label_t_new, image_t);
 
         double[] loss = new double[convnet.rL.length];
         for (int i = 0; i < convnet.rL.length; i++) {
             loss[i]=convnet.rL[i];
-            System.out.println(loss[i]);
         }
         double[] indx = new double[loss.length];
         for (int i = 0; i < loss.length; i++) {
             indx[i] = i;
         }
+
+        int[] test_y;
+        test_y = ImportFile.getLabel("t10k-labels-idx1-ubyte");
+        double[][][] test_x;
+        test_x = ImportFile.getImage("t10k-images-idx3-ubyte");
+
+        double rate = CNNtest.CNNtest(architecture,convnet,test_x,test_y);
+        System.out.println(rate);
+
         Plot2DPanel plot = new Plot2DPanel();
         plot.addLegend("SOUTH");
 
@@ -100,13 +178,7 @@ public class Main {
         frame.setContentPane(plot);
         frame.setVisible(true);
 
-        int[] test_y;
-        test_y = ImportFile.getLabel("t10k-labels-idx1-ubyte");
-        double[][][] test_x;
-        test_x = ImportFile.getImage("t10k-images-idx3-ubyte");
 
-        double rate = CNNtest.CNNtest(architecture,convnet,test_x,test_y);
-        System.out.println(rate);
 
         /*double[][][] p = (double [][][]) convnet.layers.get(1).d.get(0).d_list.get(5);
         for (int i = 0; i < 4; i++) {
@@ -115,62 +187,6 @@ public class Main {
             }
         }*/
         //System.out.println(convnet.L);
-
-
-
-        /*double[][][] input = new double[2][2][3];
-        input[0][0][0] = 1;
-        input[0][1][0] = 1;
-        input[1][0][0] = 2;
-        input[1][1][0] = 0;
-        input[0][0][1] = 2;
-        input[0][1][1] = 0;
-        input[1][0][1] = -1;
-        input[1][1][1] = 1;
-        input[0][0][2] = 1;
-        input[0][1][2] = 2;
-        input[1][0][2] = -1;
-        input[1][1][2] = 2;
-
-        double[][][] kernel = new double[3][3][3];
-        kernel[0][0][0]=1;
-        kernel[0][1][0]=2;
-        kernel[0][2][0]=3;
-        kernel[1][0][0]=0;
-        kernel[1][1][0]=1;
-        kernel[1][2][0]=1;
-        kernel[2][0][0]=-1;
-        kernel[2][1][0]=3;
-        kernel[2][2][0]=1;
-
-        kernel[0][0][1]=3;
-        kernel[0][1][1]=4;
-        kernel[0][2][1]=-2;
-        kernel[1][0][1]=0;
-        kernel[1][1][1]=2;
-        kernel[1][2][1]=2;
-        kernel[2][0][1]=3;
-        kernel[2][1][1]=1;
-        kernel[2][2][1]=0;
-
-        kernel[0][0][2]=0;
-        kernel[0][1][2]=1;
-        kernel[0][2][2]=0;
-        kernel[1][0][2]=-1;
-        kernel[1][1][2]=0;
-        kernel[1][2][2]=3;
-        kernel[2][0][2]=-2;
-        kernel[2][1][2]=2;
-        kernel[2][2][2]=0;
-
-
-        double[][] output;
-        output = Convolution.convolution3D(kernel,3,3,3,input,2,2,3);
-        for (int i = 0; i < 2; i++) {
-            for (int j = 0; j < 2; j++) {
-                System.out.println(output[i][j]);
-            }
-        }*/
 
     }
 }

@@ -13,14 +13,20 @@ public class CNNtrain extends Structure{
             throw new NumberFormatException();
         }
 
-
+        //array storing squared loss
         double[] rl = new double[numepochs*numbatches];
         int loss_index=0;
+
         for (int i = 0; i < numepochs; i++) {
+
+            System.out.println("Epoch "+i+" / "+numepochs);
+
             long start = System.currentTimeMillis();
+
             int[] kk = Permutation.RandomPermutation(m);
+
             for (int j = 0; j < numbatches; j++) {
-                System.out.println(j);
+
                 double[][][] batch_x = new double[image.length][image[0].length][batchsize];
                 for (int k = 0; k <image.length ; k++) {
                     for (int l = 0; l < image[0].length ; l++) {
@@ -30,8 +36,8 @@ public class CNNtrain extends Structure{
                     }
                 }
 
-                int[][] batch_y = new int[10][batchsize];
-                for (int k = 0; k < 10; k++) {
+                int[][] batch_y = new int[label.length][batchsize];
+                for (int k = 0; k < label.length; k++) {
                     for (int l = 0; l < batchsize ; l++) {
                         batch_y[k][l]=label[k][kk[l+j*batchsize]];
                     }
