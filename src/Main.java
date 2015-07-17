@@ -83,7 +83,7 @@ public class Main {
 
         //Layers of CNN
         //row 0 is type
-        String[][] architecture = new String[4][5];
+        String[][] architecture = new String[3][5];
         architecture[0][0] = "i";
         architecture[0][1] = "c";
         architecture[0][2] = "s";
@@ -97,10 +97,6 @@ public class Main {
         //row 2 is number of output maps for convolutional layer
         architecture[2][1] = "6";
         architecture[2][3] = "12";
-        //row 3 is activation function of convolutional layer
-        //not yet implemented in Structure
-        architecture[3][1] = "s";
-        architecture[3][3] = "s";
 
 
         /*Structure.network net = new Structure.network();
@@ -170,7 +166,7 @@ public class Main {
         plot.addLegend("SOUTH");
 
         // add a line plot to the PlotPanel
-        plot.addLinePlot("my plot", indx, loss);
+        plot.addLinePlot("Squared Loss", indx, loss);
 
         // put the PlotPanel in a JFrame like a JPanel
         JFrame frame = new JFrame("a plot panel");
