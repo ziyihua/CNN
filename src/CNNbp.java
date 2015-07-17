@@ -8,13 +8,15 @@ public class CNNbp extends Structure {
     public static network CNNbp(String[][] architecture, network convnet, int[][] batch_y){
         int n = convnet.layers.size();
 
+        //error
         double[][] e=new double[convnet.o.length][convnet.o[0].length];
         for (int i = 0; i < convnet.o.length; i++) {
             for (int j = 0; j < convnet.o[0].length; j++) {
-                e[i][j]=convnet.o[i][j]-batch_y[i][j];
+                e[i][j]=convnet.o[i][j]-(double) batch_y[i][j];
             }
         }
         convnet.e=e;
+        //loss function
         double sum=0;
         for (int i = 0; i < convnet.o.length; i++) {
             for (int j = 0; j < convnet.o[0].length; j++) {
@@ -28,6 +30,7 @@ public class CNNbp extends Structure {
         /**
          * backpropagation delta
          */
+        //output delta od=e.*[o.*(1-o)]
         double[][] dotprod_1 = new double[convnet.o.length][convnet.o[0].length];
         for (int i = 0; i < convnet.o.length; i++) {
             for (int j = 0; j < convnet.o[0].length; j++) {
@@ -42,6 +45,8 @@ public class CNNbp extends Structure {
         }
         convnet.od=od;
 
+
+        //feature vector delta fvd=ffw'*od
         double[][] product = new double[convnet.ffW[0].length][convnet.o[0].length];
         for (int i = 0; i < convnet.ffW[0].length; i++) {
             for (int j = 0; j < convnet.o[0].length; j++) {
@@ -56,6 +61,8 @@ public class CNNbp extends Structure {
             }
         }
         convnet.fvd = product;
+        //only convolution layer has sigmoid function and if the last layer is convolution
+        //fvd=fvd.*[fv.*(1-fv)]
         if ("c".equals(architecture[0][n-1])){
             double[][] dotprod_2 = new double[convnet.fvd.length][convnet.fvd[0].length];
             for (int i = 0; i < convnet.fvd.length; i++) {
@@ -76,20 +83,23 @@ public class CNNbp extends Structure {
          * reshape feature vector deltas into output map style
          */
         LAYER layer_last = convnet.layers.get(n - 1);
+
         int a = ((double[][][]) layer_last.a.get(0).a_list.get(0)).length;
         int b = ((double[][][]) layer_last.a.get(0).a_list.get(0))[0].length;
         int c = ((double[][][]) layer_last.a.get(0).a_list.get(0))[0][0].length;
         int outputmaps = layer_last.a.get(0).a_list.size();
         D Dl = new D();
+
         if (convnet.layers.get(n-1).d.isEmpty()) {
             convnet.layers.get(n-1).d.add(0, Dl);
         }else convnet.layers.get(n-1).d.set(0,Dl);
+
         for (int i = 0; i < outputmaps; i++) {
             double[][][] d = new double[a][b][c];
             for (int j = 0; j < c; j++) {
                 for (int k = 0; k < b; k++) {
                     for (int l = 0; l < a; l++) {
-                        d[l][k][j]=convnet.fvd[k*4+l][j];
+                        d[l][k][j]=convnet.fvd[i*a*b+k*a+l][j];
                     }
                 }
             }
@@ -98,15 +108,18 @@ public class CNNbp extends Structure {
 
         for (int i = n-2; i >=0 ; i--) {
             if("c".equals(architecture[0][i])){
+
                 D Dc = new D();
                 if(convnet.layers.get(i).d.isEmpty()){
                     convnet.layers.get(i).d.add(0,Dc);
                 }else convnet.layers.get(i).d.set(0,Dc);
+
                 int num_a = convnet.layers.get(i).a.get(0).a_list.size();
                 int size_a1=((double[][][]) convnet.layers.get(i).a.get(0).a_list.get(0)).length;
                 int size_a2=((double[][][]) convnet.layers.get(i).a.get(0).a_list.get(0))[0].length;
                 int size_a3=((double[][][]) convnet.layers.get(i).a.get(0).a_list.get(0))[0][0].length;
                 for (int j = 0; j < num_a; j++) {
+                    //expand the size of feature deltas to that of the current layer (replicate each row and column n times where n is the scale of the next subsampling layer)
                     int sub_scale = convnet.layers.get(i+1).scale;
                     double[][][] expand = new double[size_a1][size_a2][size_a3];
                     for (int k = 0; k < size_a3; k++) {
@@ -116,6 +129,7 @@ public class CNNbp extends Structure {
                             }
                         }
                     }
+                    //a.*(1-a)
                     double[][][] product_1 = new double[size_a1][size_a2][size_a3];
                     for (int k = 0; k < size_a3; k++) {
                         for (int l = 0; l < size_a2; l++) {
@@ -124,6 +138,7 @@ public class CNNbp extends Structure {
                             }
                         }
                     }
+                    //d_current_layer=a.*(1-a).*expand(d_previous_layer)/scale^2
                     double[][][] product_2 = new double[size_a1][size_a2][size_a3];
                     for (int k = 0; k < size_a3; k++) {
                         for (int l = 0; l < size_a2; l++) {
@@ -135,15 +150,19 @@ public class CNNbp extends Structure {
                     convnet.layers.get(i).d.get(0).d_list.add(j,product_2);
                 }
             }else if ("s".equals(architecture[0][i])){
+
                 D Ds = new D();
                 if(convnet.layers.get(i).d.isEmpty()){
                     convnet.layers.get(i).d.add(0,Ds);
                 }else convnet.layers.get(i).d.set(0,Ds);
+
                 int num_a = convnet.layers.get(i).a.get(0).a_list.size();
                 int size_a1=((double[][][]) convnet.layers.get(i).a.get(0).a_list.get(0)).length;
                 int size_a2=((double[][][]) convnet.layers.get(i).a.get(0).a_list.get(0))[0].length;
                 int size_a3=((double[][][]) convnet.layers.get(i).a.get(0).a_list.get(0))[0][0].length;
+
                 for (int j = 0; j < num_a; j++){
+
                     double[][][] z = new double[size_a1][size_a2][size_a3];
                     for (int k = 0; k < size_a1; k++) {
                         for (int l = 0; l < size_a2; l++) {
@@ -152,17 +171,19 @@ public class CNNbp extends Structure {
                             }
                         }
                     }
+                    //reverse-convolution
                     for (int k = 0; k < convnet.layers.get(i+1).a.get(0).a_list.size(); k++) {
+                        //matrix-wise convolution along 3rd dimension
                         for (int l = 0; l < size_a3; l++) {
                             int size_d1 = ((double[][][]) convnet.layers.get(i+1).d.get(0).d_list.get(j)).length;
                             int size_d2 = ((double[][][]) convnet.layers.get(i+1).d.get(0).d_list.get(j))[0].length;
                             double[][] d_one = new double[size_d1][size_d2];
                             for (int m = 0; m < size_d2; m++) {
                                 for (int o = 0; o < size_d1; o++) {
-                                    d_one[o][m] = ((double[][][]) convnet.layers.get(i+1).d.get(0).d_list.get(j))[o][m][l];
+                                    d_one[o][m] = ((double[][][]) convnet.layers.get(i+1).d.get(0).d_list.get(k))[o][m][l];
                                 }
                             }
-                            double[][] z_conv = new double[size_a1][size_a2];
+                            double[][] z_conv;
                             z_conv = Convolution.convolution2D_full_wof(d_one, size_d1, size_d2, (double[][]) convnet.layers.get(i + 1).k.get(0).k_list.get(k + j * convnet.layers.get(i+1).outmaps),convnet.layers.get(i+1).kernelsize,convnet.layers.get(i+1).kernelsize);
                             for (int m = 0; m < size_a2; m++) {
                                 for (int o = 0; o < size_a1; o++) {
@@ -181,15 +202,18 @@ public class CNNbp extends Structure {
          */
         for (int i = 1; i < n; i++) {
             if("c".equals(architecture[0][i])) {
+
                 int num_a_current = convnet.layers.get(i).a.get(0).a_list.size();
                 int num_a_previous = convnet.layers.get(i - 1).a.get(0).a_list.size();
+
                 DK DKc = new DK();
                 if (convnet.layers.get(i).dk.isEmpty()) {
                     convnet.layers.get(i).dk.add(0, DKc);
                 } else convnet.layers.get(i).dk.set(0, DKc);
-                double[] d_sum_array = new double[num_a_current];
+
                 for (int k = 0; k < num_a_previous; k++) {
                     for (int j = 0; j < num_a_current; j++) {
+                        //gradient dk is calculated as convolution of a in the last layer with k in the current layer
                         double[][][] flipall = flip3D(((double[][][]) convnet.layers.get(i - 1).a.get(0).a_list.get(k)));
                         double[][][] kernel = (double[][][]) convnet.layers.get(i).d.get(0).d_list.get(j);
                         double[][] conv = Convolution.convolution3D(flipall, flipall.length, flipall[0].length, flipall[0][0].length, kernel, kernel.length, kernel[0].length, kernel[0][0].length);
@@ -202,8 +226,10 @@ public class CNNbp extends Structure {
                         convnet.layers.get(i).dk.get(0).dk_list.add(j + k * convnet.layers.get(i).outmaps, dk);
                     }
                 }
-                for (int j = 0; j < num_a_current; j++) {
 
+                //db=sum(d)/size
+                double[] d_sum_array = new double[num_a_current];
+                for (int j = 0; j < num_a_current; j++) {
                     double d_sum = 0;
                     int size_d1 = ((double[][][]) convnet.layers.get(i).d.get(0).d_list.get(j)).length;
                     int size_d2 = ((double[][][]) convnet.layers.get(i).d.get(0).d_list.get(j))[0].length;
@@ -217,11 +243,11 @@ public class CNNbp extends Structure {
                     }
                     d_sum_array[j] = d_sum / (double) size_d3;
                 }
-
                 convnet.layers.get(i).db=d_sum_array;
             }
         }
 
+        //dffW=od*fv'/size
         double[][] od_product = new double[convnet.od.length][convnet.fv.length];
         for (int i = 0; i < convnet.od.length; i++) {
             for (int j = 0; j < convnet.fv.length; j++) {
@@ -244,7 +270,7 @@ public class CNNbp extends Structure {
         }
         convnet.dffW=od_product;
 
-
+        //dffb=mean(od,2)
         double[] dffb = new double[convnet.od.length];
         for (int i = 0; i < convnet.od.length; i++) {
             double od_row_sum = 0;

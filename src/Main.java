@@ -145,7 +145,7 @@ public class Main {
 
         double alpha = 1;
         int batchsize = 50;
-        int numepochs = 10;
+        int numepochs = 1;
 
         convnet = CNNtrain.CNNTrain(architecture, convnet, alpha, numepochs, batchsize, label_t_new, image_t);
 

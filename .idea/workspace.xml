@@ -2,16 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a40feebf-f370-4b08-ab72-2f7b1bb41af0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/CNN/Main.class" afterPath="$PROJECT_DIR$/out/production/CNN/Main.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/t10k-images-idx3-ubyte" afterPath="$PROJECT_DIR$/t10k-images-idx3-ubyte" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/t10k-labels-idx1-ubyte" afterPath="$PROJECT_DIR$/t10k-labels-idx1-ubyte" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train-images-idx3-ubyte" afterPath="$PROJECT_DIR$/train-images-idx3-ubyte" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train-labels-idx1-ubyte" afterPath="$PROJECT_DIR$/train-labels-idx1-ubyte" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/CNNapplygrads.java" afterPath="$PROJECT_DIR$/src/CNNapplygrads.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/CNNbp.java" afterPath="$PROJECT_DIR$/src/CNNbp.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/CNNff.java" afterPath="$PROJECT_DIR$/src/CNNff.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/CNNtrain.java" afterPath="$PROJECT_DIR$/src/CNNtrain.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Main.java" afterPath="$PROJECT_DIR$/src/Main.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/SetUp.java" afterPath="$PROJECT_DIR$/src/SetUp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="CNN.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -37,7 +32,7 @@
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="25" column="27" selection-start-line="25" selection-start-column="27" selection-end-line="25" selection-end-column="27" />
+              <caret line="147" column="25" selection-start-line="147" selection-start-column="25" selection-end-line="147" selection-end-column="25" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -45,10 +40,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CNNtrain.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="CNNtrain.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/CNNtrain.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
+            <state vertical-scroll-proportion="-0.5375">
               <caret line="39" column="48" selection-start-line="39" selection-start-column="48" selection-end-line="39" selection-end-column="48" />
               <folding />
             </state>
@@ -65,11 +60,41 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CNNff.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="CNNff.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/CNNff.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.925">
-              <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="173" column="35" selection-start-line="173" selection-start-column="35" selection-end-line="173" selection-end-column="35" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CNNbp.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/CNNbp.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="272" column="25" selection-start-line="272" selection-start-column="25" selection-end-line="272" selection-end-column="25" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CNNapplygrads.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/CNNapplygrads.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="58" column="20" selection-start-line="58" selection-start-column="20" selection-end-line="58" selection-end-column="20" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SetUp.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/SetUp.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="80" column="0" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -88,10 +113,12 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/SetUp.java" />
         <option value="$PROJECT_DIR$/src/CNNtrain.java" />
+        <option value="$PROJECT_DIR$/src/SetUp.java" />
         <option value="$PROJECT_DIR$/src/CNNff.java" />
         <option value="$PROJECT_DIR$/src/Main.java" />
+        <option value="$PROJECT_DIR$/src/CNNbp.java" />
+        <option value="$PROJECT_DIR$/src/CNNapplygrads.java" />
       </list>
     </option>
   </component>
@@ -99,7 +126,6 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="2" />
     <option name="y" value="23" />
     <option name="width" value="1216" />
     <option name="height" value="707" />
@@ -372,7 +398,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="2" y="23" width="1216" height="707" extended-state="6" />
+    <frame x="0" y="23" width="1216" height="707" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -391,7 +417,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24013157" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3291536" sideWeight="0.496875" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3291536" sideWeight="0.496875" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -458,16 +484,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/SetUp.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="4.125">
-          <caret line="110" column="73" selection-start-line="110" selection-start-column="73" selection-end-line="110" selection-end-column="73" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="80" column="0" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/CNNtrain.java">
+    <entry file="file://$PROJECT_DIR$/src/CNNff.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="39" column="48" selection-start-line="39" selection-start-column="48" selection-end-line="39" selection-end-column="48" />
+          <caret line="173" column="35" selection-start-line="173" selection-start-column="35" selection-end-line="173" selection-end-column="35" />
           <folding />
         </state>
       </provider>
@@ -475,7 +501,7 @@
     <entry file="file://$PROJECT_DIR$/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="25" column="27" selection-start-line="25" selection-start-column="27" selection-end-line="25" selection-end-column="27" />
+          <caret line="147" column="25" selection-start-line="147" selection-start-column="25" selection-end-line="147" selection-end-column="25" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -490,10 +516,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/CNNff.java">
+    <entry file="file://$PROJECT_DIR$/src/CNNbp.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.925">
-          <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="272" column="25" selection-start-line="272" selection-start-column="25" selection-end-line="272" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/CNNapplygrads.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="58" column="20" selection-start-line="58" selection-start-column="20" selection-end-line="58" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/CNNtrain.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.5375">
+          <caret line="39" column="48" selection-start-line="39" selection-start-column="48" selection-end-line="39" selection-end-column="48" />
           <folding />
         </state>
       </provider>

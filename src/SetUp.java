@@ -77,13 +77,14 @@ public class SetUp extends Structure {
                         c_layer.k.get(0).k_list.add(index_w, m);
                         index_w++;
                     }
-
-                    double[] b = new double[c_layer.outmaps];
-                    for (int n = 0; n < c_layer.outmaps; n++) {
-                        b[n] = 0;
-                    }
-                    convnet.layers.get(i).b = b;
                 }
+
+                double[] b = new double[c_layer.outmaps];
+                for (int n = 0; n < c_layer.outmaps; n++) {
+                    b[n] = 0;
+                }
+                convnet.layers.get(i).b = b;
+
                 inputmap = convnet.layers.get(i).outmaps;
             }
         }

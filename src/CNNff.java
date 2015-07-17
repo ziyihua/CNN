@@ -43,7 +43,11 @@ public class CNNff extends Structure{
                     }
 
                     //convolution
+                    /**
+                     * each input is convolved with an output-specific kernel and sum of all convolved inputs gives an output
+                     */
                     for (int k = 0; k < inputmaps; k++) {
+                        //a matrix-wise 2D convolution along the 3rd dimension is used instead of 3D convolution
                         for (int l = 0; l < c_new; l++) {
                             double[][] x_one = new double[a][b];
                             for (int m = 0; m < a; m++) {
@@ -60,6 +64,7 @@ public class CNNff extends Structure{
                         }
 
                     }
+                    //apply activation function
                     double[][][] m = new double[a_new][b_new][c_new];
                     for (int k = 0; k < a_new; k++) {
                         for (int l = 0; l < b_new; l++) {
@@ -70,6 +75,7 @@ public class CNNff extends Structure{
                     }
                     layer_current.a.get(0).a_list.add(j, m);
                 }
+                //number of inputs to the new layer is outmaps of this layer
                 inputmaps=layer_current.outmaps;
             }
             else if ("s".equals(architecture[0][i])){
@@ -77,6 +83,7 @@ public class CNNff extends Structure{
                 if (convnet.layers.get(i).a.isEmpty()) {
                     convnet.layers.get(i).a.add(0, As);
                 }else convnet.layers.get(i).a.set(0,As);
+
                 LAYER layer_previous = convnet.layers.get(i-1);
                 LAYER layer_current = convnet.layers.get(i);
                 int a = ((double[][][]) (layer_previous.a.get(0).a_list).get(0)).length;
@@ -90,8 +97,11 @@ public class CNNff extends Structure{
                         subsample[j][k]=(double) 1/(layer_current.scale*layer_current.scale);
                     }
                 }
+
+                //subsampling is carried as convolution with constant kernel
                 for (int j = 0; j < inputmaps; j++) {
                     double[][][] z = new double[a_new][b_new][c];
+                    //matrix-wise 2D convolution
                     for (int k = 0; k < c; k++) {
                         double[][] a_one = new double[a][b];
                         for (int m = 0; m < a; m++) {
@@ -106,6 +116,7 @@ public class CNNff extends Structure{
                             }
                         }
                     }
+                    //get only one row and column in each two, resulting in reducing the size to its half
                     double[][][] m = new double[(a_new+1)/2][(b_new+1)/2][c];
                     for (int k = 0; k < (a_new+1)/2; k++) {
                         for (int l = 0; l < (b_new+1)/2; l++) {
@@ -142,7 +153,8 @@ public class CNNff extends Structure{
         convnet.fv=fv;
 
 
-
+        //feedforward into output perceptrons
+        //ffw*fv
         int d = convnet.ffW.length;
         int e = convnet.fv.length;
         double[][] product = new double[d][c];
@@ -159,6 +171,7 @@ public class CNNff extends Structure{
             }
         }
 
+        //apply activation function
         double[][] o = new double[d][c];
         for (int i = 0; i < d; i++) {
             for (int j = 0; j < c; j++) {
